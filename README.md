@@ -67,6 +67,24 @@ The app integrates with **JSONPlaceholder** to manage user data:
 
 This assignment was built to demonstrate my ability to build a small but functional CRUD app. By completing this, I was able to practice several aspects of React, handle backend API integration, and properly manage state in a single-page application.
 
+## Usage
+
+**View**: A list of users will be shown on the homepage.
+**Add**: Click "Add User" to open a form for submitting new user details.
+**Edit**: Click "Edit" next to a user to modify their details.
+**Delete**: Click "Delete" to remove a user.
+
+## Error Handling
+
+- If the API fails, an error message will appear.
+- Fields on the form are validated for empty values before submission.
+
+## Challenges & Reflections
+
+- The main challenge was handling state properly for dynamically updating users.
+- Given more time, I would have enhanced the client-side validation by removing any pronouns or initials at the beginning or end of the name, and extracting only the first name and last name (if available).
+- I would have further improved the UI by refining it for a better mobile experience.
+
 ## License
 
 This project is licensed under the MIT License.
