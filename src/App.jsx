@@ -7,8 +7,10 @@ import './App.css'
 function App() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [updateUserData, setUpdateUserData] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const handleUserClick = () => {
+    setCurrentUser(null);
     setIsFormVisible(true);
   }
 
@@ -18,6 +20,19 @@ function App() {
 
   const addNewUser = (newUser) => {
     setUpdateUserData(prevUserData => [...prevUserData, newUser]);
+  }
+
+  const updateUser = (updatedUser) => {
+    setUpdateUserData((prevUserData) => 
+      prevUserData.map((user) => 
+        user.id === updatedUser.id ? updatedUser : user
+      )
+    );
+  };
+
+  const handleEditUser = (user) => {
+    setCurrentUser(user);
+    setIsFormVisible(true);
   }
 
   return (
@@ -34,8 +49,8 @@ function App() {
           onClick={handleUserClick}
         />
       </div>
-      {isFormVisible && <EmployeeForm closeForm={handleCloseForm} addNewUser={addNewUser} />}
-      <EmplpoyeeTable userData={updateUserData} setUserData={setUpdateUserData} />
+      {isFormVisible && <EmployeeForm closeForm={handleCloseForm} addNewUser={addNewUser} updateUser={updateUser} currentUser={currentUser} />}
+      <EmplpoyeeTable userData={updateUserData} setUserData={setUpdateUserData} handleEditUser={handleEditUser} />
     </>
   )
 }

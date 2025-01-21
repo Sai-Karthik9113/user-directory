@@ -1,15 +1,36 @@
+import React, { useEffect, useState } from "react";
 import styles from './Modal.module.css';
-import React, { useState } from "react";
+import { addUser, updateNewUser } from "../../api";
 
-const EmployeeForm = ({ closeForm, addNewUser }) => {
+const EmployeeForm = ({ closeForm, addNewUser, updateUser, currentUser }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [company, setCompany] = useState('');
+    const [error, setError] = useState(null);
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        if (currentUser) {
+            setName(currentUser.name);
+            setEmail(currentUser.email);
+            setCompany(currentUser.company.name);
+        }
+    }, [currentUser]);
+
+    const validateEmail = (email) => {
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailPattern.test(email);
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const newUser = {
-            id: Date.now(),
+
+        if (!validateEmail(email)) {
+            setError("Please enter a valid email address.");
+            return;
+        }
+
+        const user = {
+            id: currentUser ? currentUser.id : Date.now(),
             name,
             email,
             company: {
@@ -17,7 +38,18 @@ const EmployeeForm = ({ closeForm, addNewUser }) => {
             },
         }
 
-        addNewUser(newUser);
+        try {
+            if (currentUser) {
+                const updatedUser = await updateNewUser(user.id, user);
+                updateUser(updatedUser);
+            } else {
+                const newUser = await addUser(user);
+                addNewUser(newUser);
+            }
+        } catch (error) {
+            setError("An error occured whilesaving user details");
+            console.error(error);
+        }
         
         closeForm();
     }
@@ -25,7 +57,8 @@ const EmployeeForm = ({ closeForm, addNewUser }) => {
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modal}>
-                <h2>Add New User</h2>
+                <h2>{currentUser ? 'Edit User' : 'Add New User'}</h2>
+                {error && <p align="center" style={{ color: 'red' }}>{error}</p>}
                 <form onSubmit={handleSubmit}>
                     <label htmlFor='name'> Full Name: </label>
                     <input
@@ -55,7 +88,7 @@ const EmployeeForm = ({ closeForm, addNewUser }) => {
                         required
                     />
                     <div className={styles.formButtons}>
-                        <button type="submit">Add User</button>
+                        <button type="submit">{currentUser ? 'Update User' : 'Add User'}</button>
                         <button type="button" onClick={closeForm}>Close</button>
                     </div>
                 </form>

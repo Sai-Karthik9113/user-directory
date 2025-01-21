@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styles from './UserList.module.css';
 import Button from "../Button/Button";
-// import EmployeeForm from "../Modal/Modal";
 import { MdOutlineEdit, MdOutlineCancel } from "react-icons/md";
 import { CircularProgress } from "@mui/material";
 import { fetchUsers, deleteUser } from "../../api";
 
-const EmplpoyeeTable = ({ userData, setUserData }) => {
+const EmplpoyeeTable = ({ userData, setUserData, handleEditUser }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -28,13 +27,23 @@ const EmplpoyeeTable = ({ userData, setUserData }) => {
 
     const getFirstName = (fullName) => {
         const nameArr = fullName.split(" ");
-        return nameArr[0];
+        if (nameArr[0] !== "Mr." && nameArr[0] !== "Mrs." ) {
+            return nameArr[0];
+        } else {
+            return nameArr[1];
+        }
     }
 
     const getLastName = (fullName) => {
         const nameArr = fullName.split(" ");
         if (nameArr.length > 1) {
-            return nameArr[1];
+            if (nameArr[nameArr.length - 1].length > 1) {
+                return nameArr[(nameArr.length - 1)];
+            } else if (nameArr.length > 2) {
+                return nameArr[(nameArr.length - 2)];
+            } else {
+                return "-";
+            }
         } else {
             return "-";
         }
@@ -94,6 +103,7 @@ const EmplpoyeeTable = ({ userData, setUserData }) => {
                                             backgroundColor: 'orange',
                                             color: 'black'
                                         }}
+                                        onClick={() => handleEditUser(user)}
                                     />
                                     <Button
                                         text={<MdOutlineCancel />}

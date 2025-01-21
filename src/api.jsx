@@ -22,9 +22,9 @@ export const addUser = async (userData) => {
     }
 };
 
-export const updateUser = async (userKey, userData) => {
+export const updateNewUser = async (userKey, userData) => {
     try {
-        const response = await axios.put(`${backend.endpoint}/users`, userData);
+        const response = await axios.put(`${backend.endpoint}/users/${userData.id}`, userData);
         return response.data;
     } catch (error) {
         console.error("Error in updating user details: ", error);
@@ -33,7 +33,7 @@ export const updateUser = async (userKey, userData) => {
 
 export const deleteUser = async (userId) => {
     try {
-        await axios.delete(`${backend.endpoint}/users`);
+        await axios.delete(`${backend.endpoint}/users/${userId}`);
     } catch (error) {
         console.error("Error in deleting user: ", error);        
     }
