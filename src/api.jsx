@@ -22,7 +22,7 @@ export const addUser = async (userData) => {
     }
 };
 
-export const updateUser = async (useRadioGroup, userData) => {
+export const updateUser = async (userKey, userData) => {
     try {
         const response = await axios.put(`${backend.endpoint}/users`, userData);
         return response.data;

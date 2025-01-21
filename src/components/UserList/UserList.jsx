@@ -4,7 +4,6 @@ import Button from "../Button/Button";
 import { MdOutlineEdit, MdOutlineCancel } from "react-icons/md";
 import { CircularProgress } from "@mui/material";
 import { fetchUsers, deleteUser } from "../../api";
-import axios from "axios";
 
 const EmplpoyeeTable = () => {
     const [userData, setUserData] = useState([]);
