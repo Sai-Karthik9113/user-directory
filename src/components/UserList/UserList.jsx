@@ -82,31 +82,29 @@ const EmplpoyeeTable = () => {
                 <tbody align="center">
                     {
                         userData.map((user, idx) => (
-                            <>
-                                <tr key={`${user}-${idx}`} className={styles.userTableRow}>
-                                    <td> {user.id} </td>
-                                    <td> {getFirstName(user.name)} </td>
-                                    <td> {getLastName(user.name)} </td>
-                                    <td> {user.email} </td>
-                                    <td> {user.company.name} </td>
-                                    <td className={styles.actionButtons}>
-                                        <Button
-                                            text={<MdOutlineEdit />}
-                                            style={{
-                                                backgroundColor: 'orange',
-                                                color: 'black'
-                                            }}
-                                        />
-                                        <Button
-                                            text={<MdOutlineCancel />}
-                                            style={{
-                                                backgroundColor: 'red'
-                                            }}
-                                            onClick={() => handleDelete(user.id)}
-                                        />
-                                    </td>
-                                </tr>
-                            </>
+                            <tr key={`${user}-${idx}`} className={styles.userTableRow}>
+                                <td> {user.id} </td>
+                                <td> {getFirstName(user.name)} </td>
+                                <td> {getLastName(user.name)} </td>
+                                <td> {user.email} </td>
+                                <td> {user.company.name} </td>
+                                <td className={styles.actionButtons}>
+                                    <Button
+                                        text={<MdOutlineEdit />}
+                                        style={{
+                                            backgroundColor: 'orange',
+                                            color: 'black'
+                                        }}
+                                    />
+                                    <Button
+                                        text={<MdOutlineCancel />}
+                                        style={{
+                                            backgroundColor: 'red'
+                                        }}
+                                        onClick={() => handleDelete(user.id)}
+                                    />
+                                </td>
+                            </tr>
                         ))
                     }
                 </tbody>
