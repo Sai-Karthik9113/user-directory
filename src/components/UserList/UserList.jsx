@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styles from './UserList.module.css';
 import Button from "../Button/Button";
+// import EmployeeForm from "../Modal/Modal";
 import { MdOutlineEdit, MdOutlineCancel } from "react-icons/md";
 import { CircularProgress } from "@mui/material";
 import { fetchUsers, deleteUser } from "../../api";
 
-const EmplpoyeeTable = () => {
-    const [userData, setUserData] = useState([]);
+const EmplpoyeeTable = ({ userData, setUserData }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
