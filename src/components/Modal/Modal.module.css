@@ -66,3 +66,21 @@
     background-color: red;
     color: white;
 }
+
+@media (max-width: 768px) {
+    .modal {
+        width: 60%;
+    }
+    .modal h2 {
+        margin-bottom: 5px;
+    }
+    .modal form input {
+        width: 80%;
+    }
+    .formButtons {
+        width: 100%;
+    }
+    .formButtons button {
+        padding: 10px 20px;
+    }
+}
