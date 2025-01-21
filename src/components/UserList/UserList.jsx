@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from './UserList.module.css';
+import Button from "../Button/Button";
 import { MdOutlineEdit, MdOutlineCancel } from "react-icons/md";
-import { CircularProgress } from "@mui/material";
-import { fetchUsers } from "../api";
+import { CircularProgress, colors } from "@mui/material";
+import { fetchUsers } from "../../api";
 
 const EmplpoyeeTable = () => {
     const [userData, setUserData] = useState([]);
@@ -45,6 +46,7 @@ const EmplpoyeeTable = () => {
                         <th> Last Name </th>
                         <th> Email </th>
                         <th> Company </th>
+                        <th> Actions </th>
                     </tr>
                 </thead>
                 <tbody align="center">
@@ -53,14 +55,30 @@ const EmplpoyeeTable = () => {
                             <CircularProgress />
                         ) : (
                             userData.map((user, idx) => (
-                                <tr key={`${user}-${idx}`} className={styles.userTableRow}>
-                                    <td> {user.id} </td>
-                                    <td> {getFirstName(user.name)} </td>
-                                    <td> {getLastName(user.name)} </td>
-                                    <td> {user.email} </td>
-                                    <td> {user.company.name} </td>
-                                    
-                                </tr>
+                                <>
+                                    <tr key={`${user}-${idx}`} className={styles.userTableRow}>
+                                        <td> {user.id} </td>
+                                        <td> {getFirstName(user.name)} </td>
+                                        <td> {getLastName(user.name)} </td>
+                                        <td> {user.email} </td>
+                                        <td> {user.company.name} </td>
+                                        <td className={styles.actionButtons}>
+                                            <Button
+                                                text={<MdOutlineEdit />}
+                                                style={{
+                                                    backgroundColor: 'orange',
+                                                    color: 'black'
+                                                }}
+                                            />
+                                            <Button
+                                                text={<MdOutlineCancel />}
+                                                style={{
+                                                    backgroundColor: 'red'
+                                                }}
+                                            />
+                                        </td>
+                                    </tr>
+                                </>
                             ))
                         )
                     }

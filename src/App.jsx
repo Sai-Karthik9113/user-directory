@@ -1,4 +1,4 @@
-import EmplpoyeeTable from './components/UserList'
+import EmplpoyeeTable from './components/UserList/UserList'
 import './App.css'
 
 function App() {

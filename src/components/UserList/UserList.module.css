@@ -1,0 +1,22 @@
+.userTable {
+    border-collapse: collapse;
+    border: 1px solid violet;
+    width: 100%;
+}
+
+.userTable thead tr {
+    background-color: violet;
+}
+
+.userTableRow td {
+    background-color: rgb(255, 219, 255);
+}
+
+.userTable tr, .userTableRow tr {
+    border-bottom: 1px solid violet;
+}
+
+.actionButtons {
+    display: flex;
+    justify-content: space-evenly;
+}
