@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from './UserList.module.css';
+import { MdOutlineEdit, MdOutlineCancel } from "react-icons/md";
 import { CircularProgress } from "@mui/material";
 import { fetchUsers } from "../api";
 
@@ -36,9 +37,9 @@ const EmplpoyeeTable = () => {
 
     return (
         <>
-            <table align="center" cellSpacing={25}>
+            <table className={styles.userTable} align="center" cellPadding={10}>
                 <thead>
-                    <tr>
+                    <tr className={styles.userTableRow}>
                         <th> ID </th>
                         <th> First Name </th>
                         <th> Last Name </th>
@@ -52,12 +53,13 @@ const EmplpoyeeTable = () => {
                             <CircularProgress />
                         ) : (
                             userData.map((user, idx) => (
-                                <tr key={`${user}-${idx}`}>
+                                <tr key={`${user}-${idx}`} className={styles.userTableRow}>
                                     <td> {user.id} </td>
                                     <td> {getFirstName(user.name)} </td>
                                     <td> {getLastName(user.name)} </td>
                                     <td> {user.email} </td>
                                     <td> {user.company.name} </td>
+                                    
                                 </tr>
                             ))
                         )
