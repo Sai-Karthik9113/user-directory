@@ -1,4 +1,5 @@
 .userTable {
+    box-sizing: border-box;
     border-collapse: collapse;
     border: 1px solid violet;
     width: 100%;
@@ -25,9 +26,16 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
-}
-
-.circularLoading {
     color: red;
     text-align: center;
+}
+
+@media (max-width: 768px) {
+    .userTable {
+        font-size: clamp(12px, 2vw, 16px);
+        text-wrap: wrap;
+    }
+    .userTable th, .userTable td {
+        padding: 5px 0px;
+    }
 }

@@ -36,7 +36,7 @@ function App() {
   }
 
   return (
-    <>
+    <div className="container">
       <div className='heading-container'>
         <h1 align="left"> User Directory </h1>
         <Button
@@ -51,7 +51,7 @@ function App() {
       </div>
       {isFormVisible && <EmployeeForm closeForm={handleCloseForm} addNewUser={addNewUser} updateUser={updateUser} currentUser={currentUser} />}
       <EmplpoyeeTable userData={updateUserData} setUserData={setUpdateUserData} handleEditUser={handleEditUser} />
-    </>
+    </div>
   )
 }
 
