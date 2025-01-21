@@ -2,19 +2,24 @@ import React, { useState, useEffect } from "react";
 import styles from './UserList.module.css';
 import Button from "../Button/Button";
 import { MdOutlineEdit, MdOutlineCancel } from "react-icons/md";
-import { CircularProgress, colors } from "@mui/material";
-import { fetchUsers } from "../../api";
+import { CircularProgress } from "@mui/material";
+import { fetchUsers, deleteUser } from "../../api";
+import axios from "axios";
 
 const EmplpoyeeTable = () => {
     const [userData, setUserData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const loadData = async () => {
             try {
                 const res = await fetchUsers();
                 setUserData(res);
+                setLoading(false);
             } catch (error) {
                 console.error("Error: ", error);
+                setLoading(false);
             }
         }
 
@@ -35,6 +40,31 @@ const EmplpoyeeTable = () => {
             return "-";
         }
     }
+    
+    const handleDelete = async (id) => {
+        try {
+            await deleteUser(id);
+            setUserData(userData.filter(user => user.id !== id));
+        } catch (error) {
+            setError(error);
+        }
+    }
+
+    if (loading) {
+        return (
+            <div className={styles.circularLoading}>
+                <CircularProgress />
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <p className={styles.displayErrMessage}>
+                {error}
+            </p>
+        )
+    }
 
     return (
         <>
@@ -51,36 +81,33 @@ const EmplpoyeeTable = () => {
                 </thead>
                 <tbody align="center">
                     {
-                        !userData ? (
-                            <CircularProgress />
-                        ) : (
-                            userData.map((user, idx) => (
-                                <>
-                                    <tr key={`${user}-${idx}`} className={styles.userTableRow}>
-                                        <td> {user.id} </td>
-                                        <td> {getFirstName(user.name)} </td>
-                                        <td> {getLastName(user.name)} </td>
-                                        <td> {user.email} </td>
-                                        <td> {user.company.name} </td>
-                                        <td className={styles.actionButtons}>
-                                            <Button
-                                                text={<MdOutlineEdit />}
-                                                style={{
-                                                    backgroundColor: 'orange',
-                                                    color: 'black'
-                                                }}
-                                            />
-                                            <Button
-                                                text={<MdOutlineCancel />}
-                                                style={{
-                                                    backgroundColor: 'red'
-                                                }}
-                                            />
-                                        </td>
-                                    </tr>
-                                </>
-                            ))
-                        )
+                        userData.map((user, idx) => (
+                            <>
+                                <tr key={`${user}-${idx}`} className={styles.userTableRow}>
+                                    <td> {user.id} </td>
+                                    <td> {getFirstName(user.name)} </td>
+                                    <td> {getLastName(user.name)} </td>
+                                    <td> {user.email} </td>
+                                    <td> {user.company.name} </td>
+                                    <td className={styles.actionButtons}>
+                                        <Button
+                                            text={<MdOutlineEdit />}
+                                            style={{
+                                                backgroundColor: 'orange',
+                                                color: 'black'
+                                            }}
+                                        />
+                                        <Button
+                                            text={<MdOutlineCancel />}
+                                            style={{
+                                                backgroundColor: 'red'
+                                            }}
+                                            onClick={() => handleDelete(user.id)}
+                                        />
+                                    </td>
+                                </tr>
+                            </>
+                        ))
                     }
                 </tbody>
             </table>

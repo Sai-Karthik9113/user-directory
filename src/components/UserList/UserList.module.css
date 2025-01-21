@@ -20,3 +20,14 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+.circularLoading {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.circularLoading {
+    color: red;
+    text-align: center;
+}
