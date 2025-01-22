@@ -21,6 +21,10 @@ const EmployeeForm = ({ closeForm, addNewUser, updateUser, currentUser }) => {
         return emailPattern.test(email);
     }
 
+    const generateNewId = () => {
+        return Number(Date.now().toString().slice(-3));
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -28,23 +32,29 @@ const EmployeeForm = ({ closeForm, addNewUser, updateUser, currentUser }) => {
             setError("Please enter a valid email address.");
             return;
         }
+        
 
         const user = {
-            id: currentUser ? currentUser.id : Date.now(),
+            id: currentUser
+                ? currentUser.id
+                : generateNewId(),
             name,
             email,
             company: {
                 name: company
             },
         }
+        
+        
 
         try {
             if (currentUser) {
-                const updatedUser = await updateNewUser(user.id, user);
-                updateUser(updatedUser);
+                console.log(user);
+                const editedUser = await updateNewUser(user.id, user);
+                updateUser(editedUser);
             } else {
-                const newUser = await addUser(user);
-                addNewUser(newUser);
+                await addUser(user);
+                addNewUser(user);
             }
         } catch (error) {
             setError("An error occured whilesaving user details");

@@ -8,6 +8,12 @@ import { fetchUsers, deleteUser } from "../../api";
 const EmplpoyeeTable = ({ userData, setUserData, handleEditUser }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
+    const totalPages = Math.ceil(userData.length/itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedUsers = userData.slice(startIndex, startIndex + itemsPerPage);
 
     useEffect(() => {
         const loadData = async () => {
@@ -58,6 +64,18 @@ const EmplpoyeeTable = ({ userData, setUserData, handleEditUser }) => {
         }
     }
 
+    const handleNextPage = () => {
+        if (totalPages > currentPage) {
+            setCurrentPage(currentPage + 1);
+        }
+    }
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
+
     if (loading) {
         return (
             <div className={styles.circularLoading}>
@@ -89,7 +107,7 @@ const EmplpoyeeTable = ({ userData, setUserData, handleEditUser }) => {
                 </thead>
                 <tbody align="center">
                     {
-                        userData.map((user, idx) => (
+                        paginatedUsers.map((user, idx) => (
                             <tr key={`${user}-${idx}`} className={styles.userTableRow}>
                                 <td> {user.id} </td>
                                 <td> {getFirstName(user.name)} </td>
@@ -118,6 +136,11 @@ const EmplpoyeeTable = ({ userData, setUserData, handleEditUser }) => {
                     }
                 </tbody>
             </table>
+            <div className={styles.pageNumbers}>
+                <button onClick={handlePrevPage}>Previous</button>
+                <button>{currentPage}</button>
+                <button onClick={handleNextPage}>Next</button>
+            </div>
         </>
     );
 }

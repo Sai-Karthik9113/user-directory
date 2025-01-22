@@ -23,8 +23,13 @@ function App() {
   }
 
   const updateUser = (updatedUser) => {
+
+    if (!updatedUser || !updatedUser.id) {
+      console.error("updateUser called with invalid user:", updatedUser);
+      return;
+  }
     setUpdateUserData((prevUserData) => 
-      prevUserData.map((user) => 
+      prevUserData.map((user) =>
         user.id === updatedUser.id ? updatedUser : user
       )
     );
